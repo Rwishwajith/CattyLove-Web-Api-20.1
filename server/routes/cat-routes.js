@@ -8,6 +8,7 @@ const Cat = require("../models/cat.model");
 
 const mongoose = require("mongoose");
 
+const responseCodes = require("../models/response-codes");
 
 // Get all cats
 catRoutes.route("/api/cats").get(async (req, res) => {
