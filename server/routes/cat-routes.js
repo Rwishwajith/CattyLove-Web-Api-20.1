@@ -19,3 +19,12 @@ catRoutes.route("/api/cats").get(async (req, res) => {
     }
   });
   
+  // Get a cat by id
+catRoutes.route("/api/cats/:id").get(async (req, res) => {
+  try {
+    const cat = await Cat.findById(req.params.id);
+    res.status(responseCodes.ok).json(cat);
+  } catch (err) {
+    res.json({ status: "error", error: err.message });
+  }
+});
