@@ -6,11 +6,10 @@ const User = new mongoose.Schema(
     photoUrl: { type: String },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, required: true },
+    role: { type: String },
     wishlist: [
       {
         type: String,
-        unique: true,
       },
     ], // { type: mongoose.Schema.Types.ObjectId, ref: 'Cat' }
   },
