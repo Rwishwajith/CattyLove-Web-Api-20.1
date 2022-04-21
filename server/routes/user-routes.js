@@ -11,6 +11,27 @@ const Cat = require("../models/cat.model");
 
 const mongoose = require("mongoose");
 
+// Get user ID
+userRoutes.route("/api/users/:id").get(async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(responseCodes.ok).json(user);
+  } catch (err) {
+    res.json({ status: "error", error: err.message });
+  }
+});
+
+/**
+ * @swagger
+ * /{id}/wishlist:
+ *   get:
+ *    summary: Get the wishlist of the user by id
+ *    tags: [User]
+ *   parameters:
+ *    - in: path
+ *      _id: id
+ */
+
 //view wishlist
 userRoutes.route("/api/users/:id/wishlist").get(async (req, res) => {
     try {
@@ -25,18 +46,6 @@ userRoutes.route("/api/users/:id/wishlist").get(async (req, res) => {
       res.json({ status: "error", error: err.message });
     }
   });
-
-// Get user ID
-userRoutes.route("/api/users/:id").get(async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    res.status(responseCodes.ok).json(user);
-  } catch (err) {
-    res.json({ status: "error", error: err.message });
-  }
-});
-
-
 
 //Add to wishlist
 userRoutes.route("/api/users/:id/wishlist").post(async (req, res) => {
