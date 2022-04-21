@@ -12,6 +12,18 @@ const Cat = require("../models/cat.model");
 const mongoose = require("mongoose");
 
 
+// Get user ID
+userRoutes.route("/api/users/:id").get(async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(responseCodes.ok).json(user);
+  } catch (err) {
+    res.json({ status: "error", error: err.message });
+  }
+});
+
+
+
 //Add to wishlist
 userRoutes.route("/api/users/:id/wishlist").post(async (req, res) => {
     try {
