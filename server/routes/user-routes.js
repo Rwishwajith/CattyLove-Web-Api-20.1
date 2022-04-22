@@ -65,6 +65,22 @@ userRoutes.route("/api/users/:id/wishlist").post(async (req, res) => {
     }
   });
 
+  //Remove From wishlist
+userRoutes.route("/api/users/:uid/wishlist/:id").delete(async (req, res) => {
+    try {
+      const user = await User.findOneAndUpdate(
+        {
+          _id: mongoose.Types.ObjectId(req.params.uid),
+        },
+        {
+          $pull: { wishlist: mongoose.Types.ObjectId(req.params.id) },
+        }
+      );
+      res.status(responseCodes.ok).json(user);
+    } catch (err) {
+      res.json({ status: "error", error: err.message });
+    }
+  });
 
 
 
