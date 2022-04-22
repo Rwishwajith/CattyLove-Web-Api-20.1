@@ -36,3 +36,22 @@ import Typography from "@mui/material/Typography";
     setCat(data);
     return data;
   }
+
+  // Add a cat to wishlist
+  async function addToWishlist() {
+    const uid = localStorage.getItem("uid");
+    const response = await fetch(
+      `http://localhost:4000/api/users/${uid}/wishlist/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: cat._id,
+        }),
+      }
+    );
+    const data = await response.json();
+      return data;
+    }
