@@ -11,6 +11,97 @@ const Cat = require("../models/cat.model");
 
 const mongoose = require("mongoose");
 
+
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    User:
+ *     type: object
+ *     required:
+ *      - _id
+ *      - email
+ *      - password
+ *     properties:
+ *       _id:
+ *        type: string
+ *       email:
+ *        type: string
+ *        description: Email of the user
+ *        unique: true
+ *       password:
+ *        type: string
+ *        description: Password of the user
+ *       photoUrl:
+ *        type: string
+ *        description: Photo URL of the user
+ *       role:
+ *        type: string
+ *        description: Role of the user
+ *       wishlist:
+ *        type: array
+ *        items:
+ *          type: string
+ *        description: List of cat ids that the user has in their wishlist
+ *       createdAt:
+ *        type: string
+ *        description: Date of creation of the user
+ *       updatedAt:
+ *        type: string
+ *        description: Date of last update of the user
+ * 
+ */
+
+/**
+ * @swagger
+ * /:
+ *  get:
+ *    summary: Get all users
+ *    responses:
+ *      200:
+ *        description: A array of all users
+ *        content:
+ *        application/json:
+ *          schema:
+ *            type: array
+ *            items:
+ *             $ref: '#/components/schemas/User'
+ */
+
+ userRoutes.route("/api/users").get(async (req, res) => {
+  try {
+    const user = await User.find();
+    res.status(responseCodes.ok).json(user);
+  } catch (err) {
+    res.json({ status: "error", error: err.message });
+  }
+});
+
+/**
+ * @swagger
+ * /{id}:
+ *   get:
+ *     summary: Get the user by id
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         _id: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user id
+ *     responses:
+ *       200:
+ *         description: The user by id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: The user was not found
+ */
+
+
 // Get user ID
 userRoutes.route("/api/users/:id").get(async (req, res) => {
   try {
