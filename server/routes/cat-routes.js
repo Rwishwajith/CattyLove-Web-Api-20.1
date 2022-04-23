@@ -29,3 +29,23 @@ catRoutes.route("/api/cats/:id").get(async (req, res) => {
     res.json({ status: "error", error: err.message });
   }
 });
+
+// Like a cat
+catRoutes.route("/api/cats/:id/like").put(async (req, res) => {
+  try {
+    const cat = await Cat.findById(req.params.id);
+    if (!cat.likedBy.includes(req.body.uid)) {
+      const updatedCat = await cat.updateOne({
+        $push: { likedBy: req.body.uid },
+      });
+      res.status(responseCodes.ok).json(updatedCat);
+    } else {
+      const updatedCat = await cat.updateOne({
+        $pull: { likedBy: req.body.uid },
+      });
+      res.status(responseCodes.ok).json(updatedCat);
+    }
+  } catch (err) {
+    res.json({ status: "error", error: err.message });
+  }
+});
