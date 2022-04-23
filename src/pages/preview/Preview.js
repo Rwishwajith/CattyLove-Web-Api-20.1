@@ -23,6 +23,47 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
+// React Hook (triggers after DOM updates)
+useEffect(() => {
+  getCatDetails().then((data) => {
+    getCatComments(data._id);
+  });
+  return () => { };
+}, []);
+
+// Handle delete comment button click
+const handleDeleteComment = (commentId) => {
+  deleteComment(commentId).then((data) => {
+    getCatComments(data._id);
+  });
+};
+
+// Handle input text (comment)
+const handleChange = (prop) => (event) => {
+  setValues({ ...values, [prop]: event.target.value });
+};
+// Handle comments button
+const handleMouseDownText = (event) => {
+  event.preventDefault();
+};
+
+// Handle comments button click
+const handleClickSend = (event) => {
+  setValues({
+    ...values,
+    comments: values.comment,
+  });
+  setCatComment().then((data) => {
+    getCatComments(data._id);
+  });
+};
+
+// Handle add to wishlist button click
+const handleAddToWishlist = (event) => {
+  addToWishlist().then((data) => {
+    if (data) setOpenSnack(true);
+  });
+};
 
   // Get all cat details (all details in json)
   async function getCatDetails() {
@@ -55,3 +96,4 @@ import Typography from "@mui/material/Typography";
     const data = await response.json();
       return data;
     }
+
