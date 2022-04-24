@@ -44,4 +44,45 @@ function Home() {
   const handleClose = () => {
     setOpenSnack(false);
   };
+
+
+
+  // Get cat details
+  async function getData() {
+    const response = await fetch("http://localhost:4000/api/cats", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    setCats([...data]);
+  }
+
+  return (
+    <div>
+      {/* Create a new cat button */}
+      {(user && user.role === "admin") ? (
+        <Button variant="outlined" onClick={handleClickOpenDialog} sx={{ m: 1 }}>
+          Create New Cat
+        </Button>
+      ) : null}
+
+      {/* Show cat feet */}
+      {Array.from(cats).map((cat, index) => (
+        <Feed data={cat} key={index} onLike={handleLikeEvent} onDelete={handleDelete} />
+      ))}
+
+      {/* Create cat form */}
+      <Create open={openCreate} handleClose={handleCloseDialog} />
+
+      <Snackbar
+        open={openSnack}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        message="Deleted Cat"
+      />
+    </div>
+  );
 }
+export default Home;
