@@ -45,7 +45,21 @@ function Home() {
     setOpenSnack(false);
   };
 
-
+  // Get current user details
+  async function getCurrentUser() {
+    const response = await fetch(
+      `http://localhost:4000/api/users/${uid}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    setUser(data);
+    return data;
+  }
 
   // Get cat details
   async function getData() {
