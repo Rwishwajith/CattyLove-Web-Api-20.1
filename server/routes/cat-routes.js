@@ -78,3 +78,26 @@ catRoutes.route("/api/cats/:id").delete(async (req, res) => {
     res.json({ status: "error", error: err.message });
   }
 });
+
+// Post a comment
+catRoutes.route("/api/cats/:id/comments").post(async (req, res) => {
+  try {
+    const cat = await Cat.findOneAndUpdate(
+      {
+        _id: mongoose.Types.ObjectId(req.params.id),
+      },
+      {
+        $addToSet: {
+          comments: {
+            commentId: mongoose.Types.ObjectId(),
+            uid: req.body.uid,
+            comment: req.body.comment,
+          },
+        },
+      }
+    );
+    res.status(responseCodes.ok).json(cat);
+  } catch (err) {
+    res.json({ status: "error", error: err.message });
+  }
+});
