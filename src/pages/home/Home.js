@@ -68,7 +68,6 @@ function Home() {
     return data;
   }
 
-
   // Get cat details
   async function getData() {
     const response = await fetch("http://localhost:4000/api/cats", {
