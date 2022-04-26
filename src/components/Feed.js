@@ -144,6 +144,34 @@ let userOptions = ["Add to Wishlist", "Share"];
     return data;
   }
 
+  async function getCatComments() {
+    const response = await fetch(
+      `http://localhost:4000/api/cats/${props.data._id}/comments/`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    setComments(data);
+  }
+
+  async function deleteComment(commentId) {
+    const response = await fetch(
+      `http://localhost:4000/api/cats/${props.data._id}/comments/${commentId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  }
+  
   async function deleteCat() {
     const response = await fetch(
       `http://localhost:4000/api/cats/${props.data._id}`,
