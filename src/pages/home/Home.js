@@ -1,15 +1,18 @@
-import React from "react";
-import Feed from "../../components/Feed";
-import Create from "../../components/Create";
-import Button from "@mui/material/Button";
 import { Snackbar } from "@mui/material";
+import Alert from '@mui/material/Alert';
+import Button from "@mui/material/Button";
+import React from "react";
+import Create from "../../components/Create";
+import Feed from "../../components/Feed";
 
 function Home() {
   const uid = localStorage.getItem("uid");
 
   // State variables
   const [cats, setCats] = React.useState([]);
+  const [fact, setFact] = React.useState('');
   const [user, setUser] = React.useState({});
+  const [openFact, setOpenFact] = React.useState(false);
   const [openCreate, setOpenCreate] = React.useState(false);
   const [openSnack, setOpenSnack] = React.useState(false);
 
@@ -17,6 +20,9 @@ function Home() {
   React.useEffect(() => {
     getData();
     getCurrentUser()
+    getCatFact().then(res => {
+      setOpenFact(true);
+    });
     return () => { };
   }, []);
 
@@ -43,6 +49,7 @@ function Home() {
 
   const handleClose = () => {
     setOpenSnack(false);
+    setOpenFact(false);
   };
 
   // Get current user details
@@ -61,18 +68,8 @@ function Home() {
     return data;
   }
 
-    // Get cat details
-    async function getData() {
-      const response = await fetch("http://localhost:4000/api/cats", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
-      setCats([...data]);
-    }
-    
+
+
   //cat fact third party API
   async function getCatFact() {
     const response = await fetch("https://catfact.ninja/fact", {
@@ -109,6 +106,12 @@ function Home() {
         onClose={handleClose}
         message="Deleted Cat"
       />
+
+      <Snackbar open={openFact} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          Did you know? {fact}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
