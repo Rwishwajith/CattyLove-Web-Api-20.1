@@ -35,3 +35,60 @@ import Typography from "@mui/material/Typography";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { format } from "timeago.js";
+
+
+
+
+
+  //Handle Like Button Click
+  const handleLikeButtonClick = () => {
+    if (!isAuthenticated()) {
+      alert("Please login to like this cat");
+      return;
+    }
+
+    setLike(!liked);
+    likeCat().then(() => {
+      props.onLike(true);
+    });
+  };
+
+  const handleViewClick = () => {
+    navigate(`/cat/${props.data._id}/preview`);
+  };
+
+  const handleDeleteComment = (commentId) => {
+    deleteComment(commentId).then(() => {
+      getCatComments();
+    });
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setOpenSnack(false);
+  };
+
+  function isAuthenticated() {
+    const jwtToken = localStorage.getItem("token");
+    if (jwtToken === null || jwtToken === undefined) {
+      return false;
+    }
+    return true;
+  }
+
+  async function likeCat() {
+    const response = await fetch(
+      `http://localhost:4000/api/cats/${props.data._id}/like/`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uid: localStorage.getItem("uid"),
+        }),
+      }
+    );
+    const data = await response.json();
+    return data;
+  }
