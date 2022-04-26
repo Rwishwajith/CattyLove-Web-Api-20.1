@@ -69,6 +69,17 @@ function Home() {
   }
 
 
+  // Get cat details
+  async function getData() {
+    const response = await fetch("http://localhost:4000/api/cats", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    setCats([...data]);
+  }
 
   //cat fact third party API
   async function getCatFact() {
