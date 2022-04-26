@@ -125,6 +125,25 @@ let userOptions = ["Add to Wishlist", "Share"];
     return data;
   }
 
+  async function setCatComment() {
+    const response = await fetch(
+      `http://localhost:4000/api/cats/${props.data._id}/comments/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uid: localStorage.getItem("uid"),
+          comment: values.comment,
+        }),
+      }
+    );
+
+    const data = await response.json();
+    return data;
+  }
+
   async function deleteCat() {
     const response = await fetch(
       `http://localhost:4000/api/cats/${props.data._id}`,
