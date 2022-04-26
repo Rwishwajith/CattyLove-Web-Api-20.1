@@ -30,6 +30,24 @@ catRoutes.route("/api/cats/:id").get(async (req, res) => {
   }
 });
 
+
+// Create a cat
+catRoutes.route("/api/cats").post(async (req, res) => {
+  try {
+    if (-90 > req.body.lat > 90 && -180 > req.body.lng > 180) {
+      res.status(responseCodes.badRequest).json({
+        status: "error",
+        error: "Latitude and longitude must be between -90 and 90 and -180 and 180",
+      });
+    } else {
+      const cat = await Cat.create(req.body);
+      res.status(responseCodes.ok).json(cat);
+    }
+  } catch (err) {
+    res.json({ status: "error", error: err.message });
+  }
+});
+
 // Like a cat
 catRoutes.route("/api/cats/:id/like").put(async (req, res) => {
   try {
