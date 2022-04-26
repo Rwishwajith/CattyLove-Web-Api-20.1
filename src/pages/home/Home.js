@@ -72,7 +72,20 @@ function Home() {
       const data = await response.json();
       setCats([...data]);
     }
-  
+    
+  //cat fact third party API
+  async function getCatFact() {
+    const response = await fetch("https://catfact.ninja/fact", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    setFact(data.fact);
+    return data.fact;
+  }
+
   return (
     <div>
       {/* Create a new cat button */}
