@@ -45,18 +45,6 @@ function Home() {
     setOpenSnack(false);
   };
 
-  // Get cat details
-  async function getData() {
-    const response = await fetch("http://localhost:4000/api/cats", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    setCats([...data]);
-  }
-  
   // Get current user details
   async function getCurrentUser() {
     const response = await fetch(
@@ -72,6 +60,7 @@ function Home() {
     setUser(data);
     return data;
   }
+
   return (
     <div>
       {/* Create a new cat button */}
