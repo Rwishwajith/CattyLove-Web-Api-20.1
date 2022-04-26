@@ -51,7 +51,114 @@ const ExpandMore = styled((props) => {
 }));
 
 let userOptions = ["Add to Wishlist", "Share"];
+let adminOptions = ["Delete"];
 
+export default function Feed(props) {
+  const uid = localStorage.getItem("uid");
+  const [user, setUser] = React.useState({});
+
+  React.useEffect(() => {
+    getCatComments();
+    getCurrentUser();
+    return () => { };
+  }, []);
+
+  const navigate = useNavigate();
+
+  //Snackbar
+  const [openSnack, setOpenSnack] = React.useState(false);
+
+  const [values, setValues] = React.useState({
+    comment: "",
+  });
+  const [comments, setComments] = React.useState([]);
+
+  const handleClickSend = (event) => {
+    setValues({
+      ...values,
+      comments: values.comment,
+    });
+    setCatComment().then(() => {
+      getCatComments();
+    });
+  };
+
+  const snackbarAction = (
+    <React.Fragment>
+      {/* <Button color="secondary" size="small" onClick={handleClose}>
+                UNDO
+            </Button> */}
+      {/* <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton> */}
+    </React.Fragment>
+  );
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleMouseDownText = (event) => {
+    event.preventDefault();
+  };
+
+  //Card Expansion
+  const [expanded, setExpanded] = React.useState(false);
+  const [liked, setLike] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const open = Boolean(anchorEl);
+
+  //Handle Menu Items
+  const handleClickListItem = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuItemClick = (event, index, option) => {
+    setSelectedIndex(index);
+    setAnchorEl(null);
+
+    if (option === "Delete") {
+      deleteCat();
+      props.onDelete(true)
+    } else if (option === "Share") {
+      //API to share cats (Browser Native API)
+      if (navigator.share) {
+        if (navigator.share) {
+          navigator.share({
+            title: props.data.displayName,
+            text: props.data.description,
+            url: window.location.href
+          }).then(() => {
+            console.log('Thanks for sharing!');
+          })
+            .catch(err => {
+              console.log(`Couldn't share because of`, err.message);
+            });
+        } else {
+          console.log('web share not supported');
+        }
+
+      } else {
+        // provide a fallback here
+      }
+    }
+    else {
+      addToWishlist();
+      setOpenSnack(true);
+    }
+  };
 
   //Handle Like Button Click
   const handleLikeButtonClick = () => {
@@ -171,7 +278,7 @@ let userOptions = ["Add to Wishlist", "Share"];
     const data = await response.json();
     return data;
   }
-  
+
   async function deleteCat() {
     const response = await fetch(
       `http://localhost:4000/api/cats/${props.data._id}`,
@@ -200,7 +307,8 @@ let userOptions = ["Add to Wishlist", "Share"];
     setUser(data);
     return data;
   }
-  
+
+
   return (
     <div>
       <Card
