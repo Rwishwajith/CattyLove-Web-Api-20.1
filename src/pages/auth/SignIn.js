@@ -123,7 +123,7 @@ function Auth() {
             />
 
             <CardContent>
-              {/* Email Textfield */}
+              {/ Email Textfield /}
               <TextField
                 margin="normal"
                 required
@@ -140,7 +140,7 @@ function Auth() {
                 }
                 autoFocus
               />
-              {/* Password Textfield */}
+              {/ Password Textfield /}
               <TextField
                 margin="normal"
                 required
@@ -155,9 +155,9 @@ function Auth() {
                 }
                 autoComplete="current-password"
               />
-              {/* Remember Me checkbox */}
+              {/ Remember Me checkbox /}
 
-              {/* Sign In button */}
+              {/ Sign In button /}
               <Button
                 style={{ borderRadius: "2em", marginTop: "1em" }}
                 type="submit"
@@ -168,7 +168,7 @@ function Auth() {
               </Button>
 
               <LoginButton />
-              {/* Initially hide this, onSubmit show error message */}
+              {/ Initially hide this, onSubmit show error message /}
               {renderElement()}
             </CardContent>
 
@@ -177,7 +177,7 @@ function Auth() {
             </CardActions>
           </Grid>
 
-          {/* Display Login Background image */}
+          {/ Display Login Background image /}
           <Grid
             item
             xs={6}
