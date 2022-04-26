@@ -145,6 +145,20 @@ async function getCatComments(cid) {
   return data;
 }
 
+// Delete a comment
+async function deleteComment(commentId) {
+  const response = await fetch(
+    `http://localhost:4000/api/cats/${cat._id}/comments/${commentId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+  return data;
+}
 
   // Add a cat to wishlist
   async function addToWishlist() {
