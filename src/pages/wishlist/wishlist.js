@@ -66,6 +66,21 @@ export default function Wishlist() {
       return data;
     }
 
+    // Remove a cat from wishlist
+  async function removeFromWishlist(id) {
+    const response = await fetch(
+      `http://localhost:4000/api/users/${uid}/wishlist/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const data = await response.json();
+    return data;
+  }
     
     return (
       <div>
