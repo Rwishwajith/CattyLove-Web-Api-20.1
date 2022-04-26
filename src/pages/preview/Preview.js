@@ -22,7 +22,38 @@ import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import GoogleMapReact from "google-map-react";
+import { useParams } from "react-router-dom";
+import { format } from "timeago.js";
+// Import assets
+import logoimage from "../../assets/images/logo.png";
+// Import material colors
+import { blue, red } from "@mui/material/colors";
+// Import material icons
+import { Comment, Delete, Favorite, Send, ThumbUp } from "@mui/icons-material";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import NavigationIcon from "@mui/icons-material/Navigation";
 
+// Google maps marker
+const Marker = ({ color }) => <div>{<NavigationIcon color={color} />}</div>;
+
+export default function Preview() {
+  // Default latitute and longitute coordinates
+  const center = { lat: 6.9366020011364125, lng: 79.84251072596648 };
+  const zoom = 5;
+  // Get userid
+  const uid = localStorage.getItem("uid");
+
+  let { id } = useParams();
+
+  // State variables
+  const [values, setValues] = React.useState({
+    comment: "",
+  });
+  const [comments, setComments] = React.useState([]);
+  const [cat, setCat] = React.useState({});
+  const [openSnack, setOpenSnack] = React.useState(false);
+  
 // React Hook (triggers after DOM updates)
 useEffect(() => {
   getCatDetails().then((data) => {
