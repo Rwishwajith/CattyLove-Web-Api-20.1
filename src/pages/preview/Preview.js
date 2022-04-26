@@ -109,6 +109,43 @@ const handleAddToWishlist = (event) => {
     return data;
   }
 
+// Post a comment
+async function setCatComment() {
+  const response = await fetch(
+    `http://localhost:4000/api/cats/${cat._id}/comments/`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        uid: localStorage.getItem("uid"),
+        comment: values.comment,
+      }),
+    }
+  );
+
+  const data = await response.json();
+  return data;
+}
+
+// Get all comments
+async function getCatComments(cid) {
+  const response = await fetch(
+    `http://localhost:4000/api/cats/${cid}/comments/`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+  setComments(data);
+  return data;
+}
+
+
   // Add a cat to wishlist
   async function addToWishlist() {
     const uid = localStorage.getItem("uid");
