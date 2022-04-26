@@ -49,3 +49,14 @@ catRoutes.route("/api/cats/:id/like").put(async (req, res) => {
     res.json({ status: "error", error: err.message });
   }
 });
+
+// Delete a cat
+catRoutes.route("/api/cats/:id").delete(async (req, res) => {
+  try {
+    const cat = await Cat.findById(req.params.id);
+    const deletedCat = await cat.deleteOne();
+    res.status(responseCodes.ok).json(deletedCat);
+  } catch (err) {
+    res.json({ status: "error", error: err.message });
+  }
+});
