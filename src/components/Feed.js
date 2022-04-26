@@ -53,7 +53,6 @@ const ExpandMore = styled((props) => {
 let userOptions = ["Add to Wishlist", "Share"];
 
 
-
   //Handle Like Button Click
   const handleLikeButtonClick = () => {
     if (!isAuthenticated()) {
