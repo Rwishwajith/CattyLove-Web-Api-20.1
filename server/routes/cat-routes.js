@@ -79,6 +79,16 @@ catRoutes.route("/api/cats/:id").delete(async (req, res) => {
   }
 });
 
+// Get comments
+catRoutes.route("/api/cats/:id/comments").get(async (req, res) => {
+  try {
+    const cat = await Cat.findById(req.params.id);
+    res.status(responseCodes.ok).json(cat.comments);
+  } catch (err) {
+    res.json({ status: "error", error: err.message });
+  }
+});
+
 // Post a comment
 catRoutes.route("/api/cats/:id/comments").post(async (req, res) => {
   try {
@@ -101,3 +111,26 @@ catRoutes.route("/api/cats/:id/comments").post(async (req, res) => {
     res.json({ status: "error", error: err.message });
   }
 });
+
+// Delete a comment
+catRoutes
+  .route("/api/cats/:id/comments/:commentId")
+  .delete(async (req, res) => {
+    try {
+      const cat = await Cat.findOneAndUpdate(
+        {
+          _id: mongoose.Types.ObjectId(req.params.id),
+        },
+        {
+          $pull: {
+            comments: {
+              commentId: mongoose.Types.ObjectId(req.params.commentId),
+            },
+          },
+        }
+      );
+      res.status(responseCodes.ok).json(cat);
+    } catch (err) {
+      res.json({ status: "error", error: err.message });
+    }
+  });
