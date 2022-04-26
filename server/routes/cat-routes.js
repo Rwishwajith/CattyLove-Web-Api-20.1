@@ -12,15 +12,15 @@ const responseCodes = require("../models/response-codes");
 
 // Get all cats
 catRoutes.route("/api/cats").get(async (req, res) => {
-    try {
-      const cat = await Cat.find().sort({ createdAt: -1 });
-      res.status(responseCodes.ok).json(cat);
-    } catch (err) {
-      res.json({ status: "error", error: err.message });
-    }
-  });
-  
-  // Get a cat by id
+  try {
+    const cat = await Cat.find().sort({ createdAt: -1 });
+    res.status(responseCodes.ok).json(cat);
+  } catch (err) {
+    res.json({ status: "error", error: err.message });
+  }
+});
+
+// Get a cat by id
 catRoutes.route("/api/cats/:id").get(async (req, res) => {
   try {
     const cat = await Cat.findById(req.params.id);
@@ -29,7 +29,6 @@ catRoutes.route("/api/cats/:id").get(async (req, res) => {
     res.json({ status: "error", error: err.message });
   }
 });
-
 
 // Create a cat
 catRoutes.route("/api/cats").post(async (req, res) => {
@@ -134,3 +133,7 @@ catRoutes
       res.json({ status: "error", error: err.message });
     }
   });
+
+module.exports = catRoutes;
+
+
