@@ -118,6 +118,7 @@ function Layout(props) {
     }
   };
 
+  // Check the authenticated ot not
   function isDBAuthenticated() {
     const jwtToken = localStorage.getItem("token");
     if (jwtToken === null || jwtToken === undefined) {

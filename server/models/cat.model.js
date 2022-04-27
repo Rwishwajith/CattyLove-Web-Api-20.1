@@ -20,6 +20,7 @@ const Cat = new mongoose.Schema(
         photoURL: { type: String },
         address: { type: String },
         city: { type: String },
+        contact: { type: String },
         lat: { type: Number, min: -90, max: 90 },
         lng: { type: Number, min: -180, max: 180 },
         features: { type: Array, default: [] },

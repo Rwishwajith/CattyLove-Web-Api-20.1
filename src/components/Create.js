@@ -32,6 +32,7 @@ const initialValues = {
   longitude: "",
   latitude: "",
   city: "",
+  contact: ""
 };
 
 export default function Create(props) {
@@ -40,6 +41,7 @@ export default function Create(props) {
   const [feature, setFeature] = React.useState([]);
   const [values, setValues] = useState(initialValues);
   const [openSnack, setOpenSnack] = React.useState(false);
+  const [error, setError] = React.useState('');
   const [openError, setErrorSnack] = React.useState(false);
 
   const handleSubmit = (event) => {
@@ -70,6 +72,7 @@ export default function Create(props) {
         lat: values.latitude,
         city: values.city,
         age: values.age,
+        contact: values.contact,
         features: feature,
         owner: uid,
       }),
@@ -77,13 +80,14 @@ export default function Create(props) {
 
     const jsonData = await response.json();
     if (jsonData.error) {
+      setError(jsonData.error);
       setErrorSnack(true);
       return false;
     }
     return jsonData;
   }
 
-  const handleSelecetedTags = (items) => {
+  const handleSelectedTags = (items) => {
     setFeature(items);
   };
 
@@ -146,7 +150,7 @@ export default function Create(props) {
 
             <FeatureInput
               margin="normal"
-              selectedTags={handleSelecetedTags}
+              selectedTags={handleSelectedTags}
               fullWidth
               variant="outlined"
               id="features"
@@ -263,6 +267,19 @@ export default function Create(props) {
               }
             />
 
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              type="number"
+              name="contact"
+              label="Contact Number"
+              value={values.contact}
+              onChange={(event) =>
+                setValues({ ...values, contact: event.target.value })
+              }
+            />
+
             <Button
               style={{ borderRadius: "2em", marginTop: "1em" }}
               type="submit"
@@ -290,7 +307,7 @@ export default function Create(props) {
         onClose={handleClose}
       >
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          Failed to create cat.
+          {error}
         </Alert>
       </Snackbar>
     </div>
