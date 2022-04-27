@@ -256,7 +256,15 @@ export default function Preview() {
                   color="text.secondary"
                   component="div"
                 >
-                  <b> Description:</b> {cat.description}
+                  <b> Description:</b> {cat.description ? cat.description : "N/A"}
+                </Typography>
+
+                <Typography
+                  variant="subtitle1"
+                  color="text.secondary"
+                  component="div"
+                >
+                  <b> Contact Number:</b> {cat.contact ? cat.contact : "N/A"}
                 </Typography>
 
                 {/* Cat features */}

@@ -119,6 +119,8 @@ userRoutes.route("/api/users/:id").get(async (req, res) => {
  *    - in: path
  *      _id: id
  */
+
+//View wishlist
 userRoutes.route("/api/users/:id/wishlist").get(async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -133,6 +135,7 @@ userRoutes.route("/api/users/:id/wishlist").get(async (req, res) => {
   }
 });
 
+//Add to wishlist
 userRoutes.route("/api/users/:id/wishlist").post(async (req, res) => {
   try {
     const user = await User.findOneAndUpdate(
@@ -150,6 +153,7 @@ userRoutes.route("/api/users/:id/wishlist").post(async (req, res) => {
   }
 });
 
+//Remove to wishlist
 userRoutes.route("/api/users/:uid/wishlist/:id").delete(async (req, res) => {
   try {
     const user = await User.findOneAndUpdate(

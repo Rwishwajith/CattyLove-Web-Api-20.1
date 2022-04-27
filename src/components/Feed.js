@@ -213,6 +213,7 @@ export default function Feed(props) {
     return data;
   }
 
+  //Add to wishlist
   async function addToWishlist() {
     const uid = localStorage.getItem("uid");
     const response = await fetch(
