@@ -16,7 +16,7 @@ catRoutes.route("/api/cats").get(async (req, res) => {
     const cat = await Cat.find().sort({ createdAt: -1 });
     res.status(responseCodes.ok).json(cat);
   } catch (err) {
-    res.json({ status: "error", error: err.message });
+    res.status(responseCodes.badRequest).json({ status: "error", error: err.message });
   }
 });
 
@@ -63,7 +63,7 @@ catRoutes.route("/api/cats/:id/like").put(async (req, res) => {
       res.status(responseCodes.ok).json(updatedCat);
     }
   } catch (err) {
-    res.json({ status: "error", error: err.message });
+    res.status(responseCodes.badRequest).json({ status: "error", error: err.message });
   }
 });
 
@@ -74,7 +74,7 @@ catRoutes.route("/api/cats/:id").delete(async (req, res) => {
     const deletedCat = await cat.deleteOne();
     res.status(responseCodes.ok).json(deletedCat);
   } catch (err) {
-    res.json({ status: "error", error: err.message });
+    res.status(responseCodes.badRequest).json({ status: "error", error: err.message });
   }
 });
 
@@ -84,7 +84,7 @@ catRoutes.route("/api/cats/:id/comments").get(async (req, res) => {
     const cat = await Cat.findById(req.params.id);
     res.status(responseCodes.ok).json(cat.comments);
   } catch (err) {
-    res.json({ status: "error", error: err.message });
+    res.status(responseCodes.badRequest).json({ status: "error", error: err.message });
   }
 });
 
@@ -107,7 +107,7 @@ catRoutes.route("/api/cats/:id/comments").post(async (req, res) => {
     );
     res.status(responseCodes.ok).json(cat);
   } catch (err) {
-    res.json({ status: "error", error: err.message });
+    res.status(responseCodes.badRequest).json({ status: "error", error: err.message });
   }
 });
 
@@ -130,7 +130,7 @@ catRoutes
       );
       res.status(responseCodes.ok).json(cat);
     } catch (err) {
-      res.json({ status: "error", error: err.message });
+      res.status(responseCodes.badRequest).json({ status: "error", error: err.message });
     }
   });
 

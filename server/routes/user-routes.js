@@ -72,7 +72,7 @@ userRoutes.route("/api/users").get(async (req, res) => {
     const user = await User.find();
     res.status(responseCodes.ok).json(user);
   } catch (err) {
-    res.json({ status: "error", error: err.message });
+    res.status(responseCodes.badRequest).json({ status: "error", error: err.message });
   }
 });
 
@@ -105,7 +105,7 @@ userRoutes.route("/api/users/:id").get(async (req, res) => {
     const user = await User.findById(req.params.id);
     res.status(responseCodes.ok).json(user);
   } catch (err) {
-    res.json({ status: "error", error: err.message });
+    res.status(responseCodes.badRequest).json({ status: "error", error: err.message });
   }
 });
 
@@ -131,7 +131,7 @@ userRoutes.route("/api/users/:id/wishlist").get(async (req, res) => {
 
     res.status(responseCodes.ok).json(cats);
   } catch (err) {
-    res.json({ status: "error", error: err.message });
+    res.status(responseCodes.badRequest).json({ status: "error", error: err.message });
   }
 });
 
@@ -149,7 +149,7 @@ userRoutes.route("/api/users/:id/wishlist").post(async (req, res) => {
     );
     res.status(responseCodes.ok).json(user);
   } catch (err) {
-    res.json({ status: "error", error: err.message });
+    res.status(responseCodes.badRequest).json({ status: "error", error: err.message });
   }
 });
 
@@ -166,7 +166,7 @@ userRoutes.route("/api/users/:uid/wishlist/:id").delete(async (req, res) => {
     );
     res.status(responseCodes.ok).json(user);
   } catch (err) {
-    res.json({ status: "error", error: err.message });
+    res.status(responseCodes.badRequest).json({ status: "error", error: err.message });
   }
 });
 
