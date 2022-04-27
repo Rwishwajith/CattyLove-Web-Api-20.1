@@ -172,7 +172,7 @@ export default function Feed(props) {
       props.onLike(true);
     });
   };
-
+//viewspecific cat button
   const handleViewClick = () => {
     navigate(`/cat/${props.data._id}/preview`);
   };
