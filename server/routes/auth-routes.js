@@ -24,7 +24,7 @@ authRoutes.route("/api/auth/register").post(async (req, res) => {
     });
     res.status(responseCodes.ok).json(user);
   } catch (err) {
-    res.json({ status: "error", error: err.message });
+    res.status(responseCodes.badRequest).json({ status: "error", error: err.message });
   }
 });
 
@@ -54,7 +54,7 @@ authRoutes.route("/api/auth/login").post(async (req, res) => {
       });
     }
   } catch (err) {
-    res.json({ status: "error", error: err.message });
+    res.status(responseCodes.badRequest).json({ status: "error", error: err.message });
   }
 });
 
