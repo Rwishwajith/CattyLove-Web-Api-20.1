@@ -1,12 +1,3 @@
-const express = require("express");
-const app = express();
-const cors = require("cors");
-const mongoose = require("mongoose");
-const swagger = require("./swagger");
-const fs = require('fs');
-
-require("dotenv").config({ path: "./config.env" });
-const port = process.env.PORT || 4000;
 
 const getActualRequestDurationInMilliseconds = start => {
   const NS_PER_SEC = 1e9; // convert to nanoseconds
@@ -55,21 +46,3 @@ app.use(require("./routes/auth-routes"));
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 swagger(app);
 
-mongoose
-  .connect(process.env.ATLAS_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    app.listen(port, () => {
-      // perform a database connection when server starts
-      // dbo.connectToServer(function (err) {
-      //     if (err) console.error(err);
-
-      // });
-      console.log(`Server is running on port: ${port}`);
-    });
-  })
-  .catch((err) => {
-    console.log("Error connecting to database", err);
-  });
