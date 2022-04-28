@@ -96,7 +96,7 @@ export default function Preview() {
     });
   };
 
-  // Get all cat details (all details in json)
+  // View specific cat funtionality(Get by id)
   async function getCatDetails() {
     const response = await fetch(`http://localhost:4000/api/cats/${id}`, {
       method: "GET",
