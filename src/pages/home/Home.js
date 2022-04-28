@@ -26,7 +26,7 @@ function Home() {
     return () => { };
   }, []);
 
-
+//Handle Like Event
   const handleLikeEvent = (event, index) => {
     getData();
   };
@@ -102,7 +102,7 @@ function Home() {
         </Button>
       ) : null}
 
-      {/* Show cat feet */}
+      {/* Show cat feed */}
       {Array.from(cats).map((cat, index) => (
         <Feed data={cat} key={index} onLike={handleLikeEvent} onDelete={handleDelete} />
       ))}

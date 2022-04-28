@@ -196,6 +196,7 @@ export default function Feed(props) {
     return true;
   }
 
+  //Like a Cat
   async function likeCat() {
     const response = await fetch(
       `http://localhost:4000/api/cats/${props.data._id}/like/`,
