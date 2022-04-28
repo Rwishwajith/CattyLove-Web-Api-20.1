@@ -12,6 +12,7 @@ const User = require("../models/user.model");
 
 const bcrypt = require('bcrypt')
 
+const { generateAccessToken } = require("../middleware/jwt");
 
 // Register a user
 
@@ -38,13 +39,7 @@ authRoutes.route("/api/auth/login").post(async (req, res) => {
     // If user exists then Respond OK, send json
 
     if (await bcrypt.compare(req.body.password, user.password)) {
-      const token = jwt.sign(
-        {
-          email: req.body.email,
-          password: req.body.password,
-        },
-        process.env.JWT_SECRET
-      );
+      const token = generateAccessToken(req.body.email, req.body.password);
       res.status(responseCodes.ok).json({ uid: user._id, token });
     }
     // Else send error message
@@ -54,7 +49,7 @@ authRoutes.route("/api/auth/login").post(async (req, res) => {
       });
     }
   } catch (err) {
-    res.status(responseCodes.badRequest).json({ status: "error", error: err.message });
+    res.status(responseCodes.internalServerError).json({ status: "error", error: err.message });
   }
 });
 
